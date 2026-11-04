@@ -87,7 +87,7 @@ order_df = pd.merge(order_df, product_df, on='ProductNo', how='left')
 def add_size_purchase_flag(df, step):
     col_name = f'Size{step}Purchased'
     df[col_name] = df['ProductName'].apply(
-        lambda x: 1 if re.search(rf'({step})step', str(x)) else 0
+        lambda x: 1 if re.search(rf'(?<!\d){step}step', str(x)) else 0
     )
 
 for step in range(1, 5):
