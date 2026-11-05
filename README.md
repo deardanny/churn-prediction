@@ -28,7 +28,7 @@ Sales dropped sharply as parents transitioned from diaper size 3 to size 4. Stan
 | Size1-4PurchaseCount | Purchase count per diaper size |
 | ChildAgeMonths | Child age in months |
 | TargetAgeGroupYn | Flag for 9-18 month window |
-| SameDayDeliveryZoneYn | Whether member is in same-day delivery area |
+| SameDayDeliveryZoneYn | Same-day delivery area flag used in the project; mapping is not included in this public script |
 | LoginCount | Total login count |
 | EventCount | Number of events participated |
 | ReviewRating | Average review rating |
@@ -43,4 +43,4 @@ Sales dropped sharply as parents transitioned from diaper size 3 to size 4. Stan
 - Pandas, NumPy
 
 ## Note
-Data and database credentials have been removed. All table and column names have been anonymized. Model logic and feature engineering are fully preserved.
+Data and database credentials have been removed. All table and column names have been anonymized. The script defines delivery-region lists but does not construct or merge `SameDayDeliveryZoneYn`. Reproducing that feature requires an authorized address-to-region mapping. See [model notes](MODEL_NOTES.md) for label definitions and evaluation scope.
