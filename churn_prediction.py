@@ -262,12 +262,12 @@ categorical_cols = ['Gender', 'DormancyYn', 'MemberGrade', 'ChildGender', 'Coupo
 
 for col in categorical_cols:
     enc = LabelEncoder()
-    final_df.loc[:, col] = enc.fit_transform(final_df[col])
+    final_df[col] = enc.fit_transform(final_df[col])
     encoders[col] = enc
 
-final_df.loc[:, 'MemberJoinDts'] = pd.to_numeric(final_df['MemberJoinDts'])
-final_df.loc[:, 'LastPurchaseDate'] = pd.to_numeric(final_df['LastPurchaseDate'])
-final_df.loc[:, 'LastEventApply'] = pd.to_numeric(final_df['LastEventApply'])
+final_df['MemberJoinDts'] = pd.to_numeric(final_df['MemberJoinDts'])
+final_df['LastPurchaseDate'] = pd.to_numeric(final_df['LastPurchaseDate'])
+final_df['LastEventApply'] = pd.to_numeric(final_df['LastEventApply'])
 
 # COMMAND ----------
 
