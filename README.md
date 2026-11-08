@@ -1,11 +1,15 @@
-# Churn Prediction: Diaper Size Transition
+# Customer Behavior Modeling & Churn Prediction
 
-Predicting customer churn during the diaper size 3 to 4 transition on a direct-to-consumer e-commerce platform, using LightGBM with behavioral and demographic feature engineering.
+Modeling observed purchase transitions on a direct-to-consumer e-commerce platform with LightGBM and behavioral features. This public workflow accompanies the delivery-coverage and audience-targeting case studies below.
 
-## Results
+[Delivery coverage & churn case study](https://hdjang.com/projects/delivery-churn/) · [Predictive audience targeting & A/B testing](https://hdjang.com/projects/crm/) · [Modeling code](churn_prediction.py)
+
+## Reported business results
 - 20% retention improvement among high-risk users
 - Validated via A/B test: 2-day to 1-day shipping pilot over 2 months
-- Recall-focused model to minimize false negatives (missing at-risk users)
+- Public model output: accuracy and weighted precision, recall, and F1; see [model notes](MODEL_NOTES.md) for interpretation.
+
+The shipping pilot and the purchase-transition model answer different questions. The business outcome above is not calculated by this public script; campaign assignments and original evaluation data are not bundled.
 
 ## Problem
 Sales dropped sharply as parents transitioned from diaper size 3 to size 4. Standard behavioral features showed no clear signal. The key insight came from connecting delivery zone data to churn patterns: members in same-day delivery zones churned at significantly higher rates, likely switching to a competitor platform offering faster shipping.
@@ -20,7 +24,7 @@ Sales dropped sharply as parents transitioned from diaper size 3 to size 4. Stan
    - Engagement signals: login count, event participation, coupon usage, review rating
    - Premium product purchase history as loyalty signal
 3. **Modeling**: LightGBM classifier with Bayesian hyperparameter optimization (BayesSearchCV)
-4. **Validation**: A/B test to confirm delivery speed as primary churn driver
+4. **Evaluation**: Held-out model metrics in the public script; the separate shipping pilot is described in the case study.
 
 ## Feature List
 | Feature | Description |
@@ -39,8 +43,14 @@ Sales dropped sharply as parents transitioned from diaper size 3 to size 4. Stan
 ## Tech Stack
 - Python, LightGBM, Scikit-learn, Scikit-optimize
 - Snowflake, Azure Databricks
-- MLflow (experiment tracking)
 - Pandas, NumPy
+
+## Reading the public implementation
+
+- Import `churn_prediction.py` as an exported Databricks notebook and review the dependency-installation cell. Original data is not included.
+- Configure the six `SNOWFLAKE_*` environment variables listed in the connection section and map the placeholder tables to an authorized dataset.
+- The observed purchase label and weighted evaluation metrics are explained in [MODEL_NOTES.md](MODEL_NOTES.md). The final prediction table is the held-out test split.
+- Run the baseline sections before the later Bayesian tuning section. The script does not contain campaign assignment or A/B-test analysis code.
 
 ## Note
 Data and database credentials have been removed. All table and column names have been anonymized. The script defines delivery-region lists but does not construct or merge `SameDayDeliveryZoneYn`. Reproducing that feature requires an authorized address-to-region mapping. See [model notes](MODEL_NOTES.md) for label definitions and evaluation scope.
