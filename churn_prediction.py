@@ -246,8 +246,9 @@ final_df[['CouponYn']] = final_df[['CouponYn']].fillna('N')
 # COMMAND ----------
 
 # ── TARGET VARIABLE ───────────────────────────────────────────────────────────
-# Target: whether a member purchased Size 4 diapers (1 = purchased, 0 = churned)
-# Scope: only members who have purchased Size 3 (active at-risk segment)
+# Target: Size 4 purchase observed in available order history (1 = yes, 0 = no).
+# Label 0 does not establish permanent churn.
+# Scope: only members with an observed Size 3 purchase.
 
 final_df['TargetYN'] = final_df['Size4PurchaseCount'].apply(lambda x: 1 if x > 0 else 0)
 final_df = final_df[final_df['Size3PurchaseCount'] > 0]
@@ -348,8 +349,8 @@ print('Accuracy after tuning:', accuracy_score(y_test, y_pred_tuned))
 
 # COMMAND ----------
 
-# ── PREDICTION ON FULL DATASET ────────────────────────────────────────────────
-# Generate churn predictions for all members in the dataset
+# ── PREDICTION ON HELD-OUT TEST SET ───────────────────────────────────────────
+# Generate test-split predictions and attach observed size purchase counts.
 
 X_test_with_id = final_df.loc[X_test.index, ['MemberID']]
 results_df = pd.DataFrame({
