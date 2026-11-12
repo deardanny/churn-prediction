@@ -64,7 +64,7 @@ cur.execute("SELECT OrderNo, OrderItemNo, SiteName, ProductNo, ProductName, Sell
 data = cur.fetchall()
 orderitem_columns = ['OrderNo', 'OrderItemNo', 'SiteName', 'ProductNo', 'ProductName', 'SellPrice', 'ProductPrice', 'ProductCount']
 orderitem_df = pd.DataFrame(data, columns=orderitem_columns)
-orderitem_df['OrderDate'] = pd.to_datetime(orderitem_df['OrderNo'].str[:8], format='%Y%m%d')
+orderitem_df['OrderDate'] = pd.to_datetime(orderitem_df['OrderNo'].astype('string').str[:8], format='%Y%m%d')
 orderitem_df_recent = orderitem_df[orderitem_df['OrderDate'] > pd.to_datetime('2024-01-01')]
 
 # Order member information
