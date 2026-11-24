@@ -52,5 +52,15 @@ Sales dropped sharply as parents transitioned from diaper size 3 to size 4. Stan
 - The observed purchase label and weighted evaluation metrics are explained in [MODEL_NOTES.md](MODEL_NOTES.md). The final prediction table is the held-out test split.
 - Run the baseline sections before the later Bayesian tuning section. The script does not contain campaign assignment or A/B-test analysis code.
 
+## Offline preprocessing checks
+
+With Python 3.12 and pandas installed, run from the repository root:
+
+```bash
+python3.12 -m unittest discover -s tests -v
+```
+
+The tests use synthetic order IDs to check date extraction, the existing date cutoff, missing and empty inputs, and invalid dates. They execute only the preprocessing statements, without importing the full notebook, connecting to Snowflake, or training a model.
+
 ## Note
 Data and database credentials have been removed. All table and column names have been anonymized. The script defines delivery-region lists but does not construct or merge `SameDayDeliveryZoneYn`. Reproducing that feature requires an authorized address-to-region mapping. See [model notes](MODEL_NOTES.md) for label definitions and evaluation scope.
